@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>goDB | Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+
+    <script src="{{ url_for('static', filename='main.js')}}"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="header">
+            <div class="title">
+                <img src="{{ url_for('static', filename='favicon.svg' )}}" height="30em"/>
+                <h1>goDB</h1>
+            </div>
+            <div class="user-data">
+                <p>Not signed in.</p>
+            </div>
+        </div>
+        <div class="login-page">
+            <div class="form-container login round">
+                <h2>Sign in</h2>
+                <form method='post' action="/login">
+                    <label for="user_id" class="required">User ID:</label>
+                    <input type="text" id="user_id" name="user_id" size="30" required placeholder="user_id" class="a-round">
+                    <input type="submit" id="signin" value="Sign in">
+                </form>
+                {% if error %}
+                <div class="alert a-round">
+                    <p>{{error}}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

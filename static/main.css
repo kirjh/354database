@@ -1,0 +1,131 @@
+:root {
+    --bg-color: #fff;
+    --bg-alt-color: #eee;
+    --accent-color: #2e69ff;
+
+    --border: #aaa;
+    --alt-border: #888;
+
+    --font-color: #000;
+    --subtext-color: #888;
+
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-weight: normal;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2.5rem 1rem 2rem;
+}
+
+.container-header {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+.container-header h2 {
+    margin: 0;
+    padding: 1.5rem 1rem 0;
+}
+
+.title{
+    color: var(--accent-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+.title h1,
+.title img {
+    margin: 0rem 0.25rem;
+}
+
+.user-data {
+    display: flex;
+    align-items: end;
+}
+.user-data p {
+    margin: 0rem 0.25rem;
+}
+
+.form-container {
+    background-color: var(--bg-alt-color);
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.round {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+}
+
+.a-round {
+    border: 1px solid var(--alt-border);
+    border-radius: 1rem;
+}
+
+/* FORMS */
+.required::after {
+    content: "*";
+    color: red;
+}
+
+input,
+label {
+    margin: 0.25rem 0;
+    padding: 0 0.25rem;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: 2px solid var(--accent-color);
+}
+
+fieldset {
+    margin: 0.25rem 0;
+    border-radius: 1rem;
+    border: 1px solid var(--alt-border);
+    display: grid;
+    grid-template: auto / 1fr auto;
+}
+
+fieldset input[type="radio"] {
+    accent-color: var(--accent-color);
+    height: 1.1rem;
+    width: 1.1rem;
+}
+
+input[type="submit"],
+dialog button {
+    margin: 1rem 0.25rem 0 0.25rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 1.25rem;
+    border: none;
+
+    flex: 0 1 auto;
+    align-self: end;
+
+    background-color: var(--accent-color);
+    color: #fff;
+    cursor: pointer;
+}

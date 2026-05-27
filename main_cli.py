@@ -1,12 +1,11 @@
-import sqlserver as sql
-import pyodbc
+import python.sqlserver as sql
 
 conn = sql.connect()
 user_id = None
 user_name = None
 
-user_id = 'D__iHPVDEhqQr0ZkGt___Q' # FOR TESTING ONLY. REMOVE LATER
-user_name = 'Sara'
+#user_id = 'D__iHPVDEhqQr0ZkGt___Q' # FOR TESTING ONLY. REMOVE LATER
+#user_name = 'Sara'
 
 
 print("#-----------------------------------#\n\
@@ -16,18 +15,29 @@ For a list of commands, type 'help'.")
 cmd_list = {
     'business': 'Search for (a) business(es).',
     'exit': 'Exit the program.',
+    'friend' : 'Add a friend.',
     'help': 'Get list of commands.',
     'login' : 'Log into the database.',
     'logout' : 'Log out of the database.',
+    'review' : 'Leave a review for a business',
     'user' : 'Search for (a) user(s).'
 }
 
 def login(conn, user_id, user_name):
-    cursor = conn.cursor()
+    if user_id:
+        print("Already logged in!")
+        return user_id, user_name
     print("Type in your user ID or type 'c' to cancel.")
     while True:
         uin = input("CLI:Home/Login> ")
-        uid, un = sql.login(cursor, uin)
+        try:
+            user = sql.login(conn, uin)
+            uid = user[0]
+            un = user[1]
+        except Exception as e:
+                print(e)
+                print("An error has occured.")
+                uin = 'c'
         if uin == 'c':
             return user_id, user_name
         elif uid != None:
@@ -37,7 +47,6 @@ def login(conn, user_id, user_name):
             print("Failed to log in. Please try again or type 'c' to cancel.")
 
 def search_business(conn):
-    cursor = conn.cursor()
     while True:
         uin = [0,0,0,0]
         while True:
@@ -63,7 +72,12 @@ def search_business(conn):
         elif uin[3] not in ['name', 'city', 'stars']:
             print("Invalid value for ordering value. Must be either of 'name', 'city', or 'stars'.")
         else:
-            arr = sql.search_business(cursor, uin[0], uin[1], uin[2], uin[3])
+            try:
+                arr = sql.search_business(conn, uin[0], uin[1], uin[2], uin[3])
+            except Exception as e:
+                print(e)
+                print("An error has occured.")
+                break
             if arr == None:
                 print("No results found")
             else:
@@ -74,7 +88,6 @@ def search_business(conn):
             break
 
 def search_user(conn):
-    cursor = conn.cursor()
     while True:
         uin = [0,0,0]
         while True:
@@ -92,19 +105,24 @@ def search_user(conn):
         if uin[2] == '':
             uin[2] = 1
         try:
-            float(uin[1])
+            int(uin[1])
         except:
             uin[1] = -1
         try:
             float(uin[2])
         except:
             uin[2] = -1
-        if float(uin[1]) < 0:
-            print("Invalid value for minimum review count. Must be greater than 0.")
+        if int(uin[1]) < 0:
+            print("Invalid value for minimum review count. Must be an integer greater than 0.")
         elif float(uin[2]) > 5 or float(uin[2]) < 1:
             print("Invalid value for stars. Must be a float between 1 and 5 inclusive.")
         else:
-            arr = sql.search_user(cursor, uin[0], uin[1], uin[2])
+            try:
+                arr = sql.search_user(conn, uin[0], uin[1], uin[2])
+            except Exception as e:
+                print(e)
+                print("An error has occured.")
+                break
             if arr == None:
                 print("No results found")
             else:
@@ -114,6 +132,42 @@ def search_user(conn):
                 print(f"Users found: {len(arr)}")
             break
 
+def make_friend(conn):
+    while True:
+        uin = input("Enter the user_id of the person you wish to friend.\nCLI:Home/Friend> ")
+        try:
+            sql.make_friend(conn,user_id, uin)
+            print("Successfully added friend.")
+            break
+        except Exception as e:
+            print(e)
+            print("Friendship failed. Try again.")
+
+def leave_review(conn):
+    while True:
+        uin = [0,0]
+        while True:
+            uin[0] = input("Enter the business_id.\nCLI:Home/Review> ")
+            uin[1] = input("Enter the number of stars.\nCLI:Home/Review> ")
+            a = input("Submit review with these values? (y/n) or type 'c' to cancel.\nCLI:Home/Review> ")
+            if a == 'y':
+                break
+            elif a == 'c':
+                return
+        try:
+            int(uin[1])
+        except:
+            uin[1] = -1
+        if int(uin[1]) > 5 or int(uin[1]) < 1:
+            print("Invalid value for stars. Must be an integer between 1 and 5 inclusive.")
+        else:
+            try:
+                sql.review_business(conn,user_id, uin[0], uin[1])
+                print("Successfully left review.")
+                break
+            except Exception as e:
+                print(e)
+                print("Failed to leave review. Try again.")
 
 while True:
     print("#-----------------------------------#\nStatus: " + (f"Logged in as {user_name}." if user_id != None else "Not logged in."))
@@ -124,12 +178,15 @@ while True:
         case 'help' | 'h':
             print("Commands:")
             for key in cmd_list:
-                print(f"{key} :: {cmd_list[key]}")
+                print(f"| {key} :: {cmd_list[key]}")
         case 'login' | 'l':
             user_id, user_name = login(conn, user_id, user_name)
         case 'logout' | 'o':
-            user_id, user_name = (None, None)
-            print("Successfully logged out.")
+            if user_id:
+                user_id, user_name = (None, None)
+                print("Successfully logged out.")
+            else:
+                print("Already logged out!")
         case 'business' | 'b':
             if user_id:
                 search_business(conn)
@@ -138,6 +195,16 @@ while True:
         case 'user' | 'u':
             if user_id:
                 search_user(conn)
+            else:
+                print("You must log in to perform this action.")
+        case 'friend' | 'f':
+            if user_id:
+                make_friend(conn)
+            else:
+                print("You must log in to perform this action.")
+        case 'review' | 'r':
+            if user_id:
+                leave_review(conn)
             else:
                 print("You must log in to perform this action.")
         case _:

@@ -1,0 +1,26 @@
+CASE 1:
+login: WEwjYKHh84PryzVRpwaUlw
+friend: WEwjYKHh84PryzVRpwaUlw
+business: U69aAXYMg9sPlzvsBX6UZw
+
+CASE 2:
+login: oIvc0PM_vYtyJk9CcluawQ
+friend: CPdgV9A9YRdsWB78Wie2hw
+business: ljEM0v_KClcruWn22B_V7g
+
+CASE 3:
+login: D__iHPVDEhqQr0ZkGt___Q
+friend: _zPT9ZmR5-nUfsprzIiRew
+business: UAebOqpw9sg7Qg_EsbxfEA
+
+CASE 4:
+login: Hh4z0AC87A31KTN8czg2nw
+friend: VE2ftvYYiCxbrCjccoenSw
+business: r0LJJomHdpbmb8RkxtsbZQ
+
+CASE 5:
+login: PJ43IZYt0UrknN_P4UJfFQ
+friend: PJ43IZYt0UrknN_P4UJfFQ
+business: rRSsD2EsqmLcCKunN0GAQ
+
+\\freesia.csil.sfu.ca\userdata\zjl3\AppData\Roaming\Python\Python314\Scripts

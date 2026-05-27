@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>goDB | Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+
+    <script src="{{ url_for('static', filename='home.js')}}"></script>
+</head>
+<body>
+    <div class="home-container">
+        <div class="header">
+            <div class="title">
+                <img src="{{ url_for('static', filename='favicon.svg' )}}" height="30em"/>
+                <h1>goDB</h1>
+            </div>
+            <div class="user-data">
+                <p>Hello, {{ name }}.</p>
+                <a href="/logout">Log out</a>
+            </div>
+        </div>
+        <div class="home-page">
+            <div class="form-container home round">
+                <div class="separator">
+                    <div class="navbar">
+                        <h2>Search bar</h2>
+                        <button class="active" id="user-button">Users</button>
+                        <button id="business-button">Businesses</button>
+                    </div>
+                </div>
+                <div class="user-form search-form">
+                    <form id="user-search">
+                        <label for="u_name">Name:</label>
+                        <input type="text" id="u_name" name="u_name" size="30" placeholder="Jane Doe" class="a-round">
+                        <label for="u_review_count">Minimum review count:</label>
+                        <input type="number" id="u_review_count" name="u_review_count" min="0" step="0.1" size="30" placeholder="0" class="a-round">
+                        <label for="u_stars">Minimum average stars:</label>
+                        <input type="number" id="u_stars" name="u_stars" min="1" max="5" step="0.1" size="30" placeholder="1-5" class="a-round">
+                        <input type="submit" id="u_search" value="Search">
+                    </form>
+                </div>
+                <div class="business-form search-form" style="display: none">
+                    <form id="business-search">
+                        <label for="b_name">Name:</label>
+                        <input type="text" id="b_name" name="b_name" size="30" placeholder="goDB" class="a-round">
+                        <label for="b_city">City:</label>
+                        <input type="text" id="b_city" name="b_city" size="30" placeholder="Edmonton" class="a-round">
+                        <label for="b_stars">Minimum average stars:</label>
+                        <input type="number" id="b_stars" name="b_stars" min="1" max="5" step="0.1" size="30" placeholder="1-5" class="a-round">
+                        <fieldset>
+                            <legend class="required">Sort by:</legend>
+                            <label for="radio1">Name</label>
+                            <input type="radio" id="radio1" name="b_sort_by" value="name" required checked/>
+                            <label for="radio2">City</label>
+                            <input type="radio" id="radio2" name="b_sort_by" value="city" required />
+                            <label for="radio3">Stars</label>
+                            <input type="radio" id="radio3" name="b_sort_by" value="stars" required/>
+                        </fieldset>
+                        <input type="submit" id="b_search" value="Search">
+                    </form>
+                </div>
+            </div>
+            <div class="form-container action round" style="display: none">
+                <div class="container-header">
+                    <h2>Action bar</h2>
+                </div>
+                <div class="friend-form search-form">
+                    <form id="add-friend">
+                        <h2>Add friend</h2>
+                        <label for="f_id" class="required">User ID:</label>
+                        <input type="text" id="f_id" name="f_id" size="30" class="a-round" placeholder="user_id" required>
+                        <input type="submit" id="f_submit" value="Add friend">
+                    </form>
+                </div>
+                <div class="review-form search-form">
+                    <form id="add-review">
+                        <h2>Add review</h2>
+                        <label for="r_id" class="required">Business ID:</label>
+                        <input type="text" id="r_id" name="r_id" size="30" class="a-round" placeholder="business_id" required>
+                        <label for="r_stars" class="required">Stars:</label>
+                        <input type="number" id="r_stars" name="r_stars" min="1" max="5" step="1" size="30" placeholder="1-5" class="a-round" required>
+                        <input type="submit" id="r_submit" value="Submit review">
+                    </form>
+                </div>
+            </div>
+            <div class="search-results round">
+                <div class="container-header">
+                    <h2>Search results</h2>
+                </div>
+                <div class="tuple-list">
+                </div>
+                <div class="placeholder">
+                    <p>Search results will appear here.</p>
+                    <img src="{{ url_for('static', filename='loading.svg' )}}" height="30em"/>
+                </div>
+                <div class="footer">
+                    <p>0 results.</p>
+                </div>
+            </div>
+        </div>
+        <dialog id="dialog" class="a-round">
+            <div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vulputate consectetur ligula, eget suscipit erat condimentum quis. In in dignissim nisi. Etiam neque est, consequat sit amet elementum in, lacinia id quam.</p>
+                <button commandfor="dialog" command="close">Ok</button>
+            </div>
+        </diaog>
+    </div>
+    
+</body>
+</html>
